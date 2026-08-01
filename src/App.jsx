@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Heart, X, Sun, Moon, Info } from 'lucide-react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Heart, X, Sun, Moon, Info, Maximize, Minimize } from 'lucide-react';
 import config from './config.json';
 import './index.css';
 
@@ -10,6 +10,7 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(() => {
     // Check localStorage or system preference
     const saved = localStorage.getItem('theme');
@@ -42,6 +43,27 @@ function App() {
       document.body.classList.add('theme-light');
     }
   }, [isDarkMode]);
+
+  // Track fullscreen changes
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
+  }, []);
+
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.log(`Error attempting to enable fullscreen: ${err.message}`);
+      });
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    }
+  };
 
   // Save favorites to local storage whenever they change
   useEffect(() => {
@@ -205,6 +227,9 @@ function App() {
     <div className="gallery-container">
       <header>
         <div className="header-actions">
+          <button className="theme-toggle-btn" onClick={toggleFullscreen} title="Toggle Fullscreen">
+            {isFullscreen ? <Minimize size={24} /> : <Maximize size={24} />}
+          </button>
           <button className="theme-toggle-btn" onClick={() => setIsDarkMode(!isDarkMode)}>
             {isDarkMode ? <Sun size={24} /> : <Moon size={24} />}
           </button>

@@ -250,6 +250,16 @@ body.theme-light .alert-info {
   z-index: 5;
 }
 
+/* Hide overflow on PC to strictly prevent vertical scrolling */
+@media (min-width: 769px) {
+  body {
+    overflow: hidden !important;
+  }
+  .gallery-container {
+    overflow: hidden !important;
+  }
+}
+
 /* --- Mobile Responsiveness --- */
 @media (max-width: 768px) {
   .gallery-container {
@@ -472,7 +482,7 @@ body.theme-light .alert-info {
   border-radius: 8px;
   cursor: pointer;
   font-size: 0.8rem; /* Decreased */
-  font-weight: 600;
+  font-weight: 900; /* Increased to make it very bold */
   transition: all 0.2s ease;
 }
 
