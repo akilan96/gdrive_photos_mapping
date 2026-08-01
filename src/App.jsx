@@ -238,7 +238,7 @@ function App() {
           <button 
             disabled={currentPage === 1}
             onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-            className="page-btn nav-btn"
+            className="page-btn nav-btn nav-btn-prev"
           >
             Prev
           </button>
@@ -257,7 +257,7 @@ function App() {
           <button 
             disabled={currentPage === totalPages}
             onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-            className="page-btn nav-btn"
+            className="page-btn nav-btn nav-btn-next"
           >
             Next
           </button>
