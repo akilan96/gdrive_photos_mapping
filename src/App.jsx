@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Heart, X, Sun, Moon, Info, Maximize, Minimize } from 'lucide-react';
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import config from './config.json';
 import './index.css';
 
@@ -387,19 +388,32 @@ function App() {
 
       {selectedImage && (
         <div className="lightbox" onClick={() => setSelectedImage(null)}>
-          <button className="lightbox-close" onClick={() => setSelectedImage(null)}>
+          <button className="lightbox-close" onClick={() => setSelectedImage(null)} style={{ zIndex: 1100 }}>
             <X size={36} />
           </button>
-          <img 
-            src={selectedImage.url} 
-            alt={selectedImage.name} 
-            onClick={(e) => e.stopPropagation()} 
-          />
+          <div className="lightbox-zoom-container" onClick={(e) => e.stopPropagation()} style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <TransformWrapper
+              initialScale={1}
+              minScale={0.5}
+              maxScale={5}
+              centerOnInit={true}
+              wheel={{ step: 0.2 }}
+            >
+              <TransformComponent wrapperStyle={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <img 
+                  src={selectedImage.url} 
+                  alt={selectedImage.name} 
+                  style={{ maxWidth: '100vw', maxHeight: '100vh', objectFit: 'contain' }}
+                />
+              </TransformComponent>
+            </TransformWrapper>
+          </div>
         </div>
       )}
 
       <footer className="app-footer">
         <p>Mersal Media</p>
+        <p className="crafted-by">Crafted by <span className="ask-font">Ask</span></p>
       </footer>
     </div>
   );

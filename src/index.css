@@ -179,6 +179,21 @@ body.theme-light .alert-info {
   font-weight: 700;
 }
 
+.app-footer p.crafted-by {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 0.75rem !important;
+  opacity: 0.5 !important;
+  margin-top: 2px;
+  font-weight: 500;
+}
+
+.ask-font {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 900;
+  color: var(--accent);
+  letter-spacing: 0.5px;
+}
+
 /* Single Image View */
 .single-image-view {
   flex: 1;
