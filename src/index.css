@@ -39,18 +39,17 @@ body {
   -webkit-font-smoothing: antialiased;
   height: 100dvh; /* dvh fixes mobile URL bar issue */
   max-height: 100dvh;
-  overflow: hidden;
   transition: background 0.3s ease, color 0.3s ease;
+  overflow-x: hidden;
 }
 
 .gallery-container {
   max-width: 1400px;
-  height: 100dvh;
+  min-height: 100dvh;
   margin: 0 auto;
   padding: 5px 20px;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
 }
 
 header {
@@ -225,7 +224,6 @@ body.theme-light .alert-info {
 .overlay {
   position: absolute;
   top: 10px; left: 10px; right: 10px; bottom: 10px;
-  /* Removed dark hover gradient! Kept completely transparent */
   background: transparent;
   opacity: 0;
   transition: opacity 0.3s ease;
@@ -233,8 +231,8 @@ body.theme-light .alert-info {
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-end;
-  padding: 20px;
-  pointer-events: none; /* Let clicks pass through except on buttons */
+  padding: 30px 20px; /* Increased top/bottom padding to push the button up */
+  pointer-events: none;
 }
 
 .single-image-card:hover .overlay {
@@ -293,6 +291,7 @@ body.theme-light .alert-info {
   /* Make the like button always visible on mobile */
   .overlay {
     opacity: 1;
+    padding: 15px; /* Less padding on mobile so it stays close to edges */
   }
   
   .pagination {
@@ -526,6 +525,7 @@ body.theme-light .page-btn:disabled {
 .nav-btn-prev:not(:disabled) {
   background: #3498db !important; /* Blue */
   border-color: #2980b9 !important;
+  color: white !important; /* Enforce white text regardless of theme */
 }
 .nav-btn-prev:hover:not(:disabled) {
   background: #2980b9 !important;
@@ -534,6 +534,7 @@ body.theme-light .page-btn:disabled {
 .nav-btn-next:not(:disabled) {
   background: #e74c3c !important; /* Red */
   border-color: #c0392b !important;
+  color: white !important; /* Enforce white text regardless of theme */
 }
 .nav-btn-next:hover:not(:disabled) {
   background: #c0392b !important;

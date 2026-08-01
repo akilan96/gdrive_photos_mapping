@@ -10,19 +10,43 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
-  const [favorites, setFavorites] = useState(new Set());
-  const [isDarkMode, setIsDarkMode] = useState(true);
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    // Check localStorage or system preference
+    const saved = localStorage.getItem('theme');
+    if (saved) return saved === 'dark';
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  });
+
+  // Keep track of liked images
+  const [favorites, setFavorites] = useState(() => {
+    const saved = localStorage.getItem('gallery_favorites');
+    if (saved) {
+      try {
+        return new Set(JSON.parse(saved));
+      } catch(e) {
+        return new Set();
+      }
+    }
+    return new Set();
+  });
 
   const [currentPage, setCurrentPage] = useState(1);
   const imagesPerPage = 1;
 
+  // Save theme to local storage
   useEffect(() => {
+    localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
     if (isDarkMode) {
       document.body.classList.remove('theme-light');
     } else {
       document.body.classList.add('theme-light');
     }
   }, [isDarkMode]);
+
+  // Save favorites to local storage whenever they change
+  useEffect(() => {
+    localStorage.setItem('gallery_favorites', JSON.stringify(Array.from(favorites)));
+  }, [favorites]);
 
   useEffect(() => {
     // Parse URL parameter e.g., ?link=https://drive.google... OR ?folder=1abc2xyz
