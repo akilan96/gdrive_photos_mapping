@@ -181,16 +181,17 @@ function App() {
     <div className="gallery-container">
       <header>
         <div className="header-actions">
-          <button 
-            className="theme-toggle-btn" 
-            onClick={() => setIsDarkMode(!isDarkMode)}
-            title={`Switch to ${isDarkMode ? 'Light' : 'Dark'} Mode`}
-          >
+          <button className="theme-toggle-btn" onClick={() => setIsDarkMode(!isDarkMode)}>
             {isDarkMode ? <Sun size={24} /> : <Moon size={24} />}
           </button>
-          <div className="favorites-counter">
-            <Heart size={20} className="counter-icon" />
-            <span>{favorites.size}</span>
+          <div className="stats-group" style={{ display: 'flex', gap: '10px' }}>
+            <div className="total-counter">
+              <span>{images.length} Photos</span>
+            </div>
+            <div className="favorites-counter">
+              <Heart size={20} className="counter-icon" />
+              <span>{favorites.size}</span>
+            </div>
           </div>
         </div>
         <h1>{clientName}</h1>
