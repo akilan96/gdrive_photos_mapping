@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Heart, X, Sun, Moon, Info, Maximize, Minimize } from 'lucide-react';
 import config from './config.json';
 import './index.css';
@@ -223,6 +223,51 @@ function App() {
     return [1, '...', currentPage, '...', totalPages];
   };
 
+  // --- Gesture and Double Tap Handlers ---
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
+  const minSwipeDistance = 50; 
+  const clickTimeout = useRef(null);
+
+  const onTouchStart = (e) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+    
+    if (isLeftSwipe && currentPage < totalPages) {
+      setCurrentPage(prev => Math.min(prev + 1, totalPages));
+    }
+    if (isRightSwipe && currentPage > 1) {
+      setCurrentPage(prev => Math.max(prev - 1, 1));
+    }
+  };
+
+  const handleImageClick = (e, img) => {
+    if (clickTimeout.current !== null) {
+      // A click happened recently, so this is a double click!
+      clearTimeout(clickTimeout.current);
+      clickTimeout.current = null;
+      handleFavorite(e, img); // Like the image
+    } else {
+      // This is the first click
+      clickTimeout.current = setTimeout(() => {
+        // If the timeout finishes without being cleared, it's a single click
+        setSelectedImage(img);
+        clickTimeout.current = null;
+      }, 300); // 300ms window for double tap
+    }
+  };
+
   const [imageLoaded, setImageLoaded] = useState(false);
 
   // Reset image loader when page changes
@@ -281,7 +326,10 @@ function App() {
           <div 
             key={img.id} 
             className="single-image-card"
-            onClick={() => setSelectedImage(img)}
+            onClick={(e) => handleImageClick(e, img)}
+            onTouchStart={onTouchStart}
+            onTouchMove={onTouchMove}
+            onTouchEnd={onTouchEnd}
           >
             {!imageLoaded && (
               <div className="image-loader">
