@@ -195,7 +195,7 @@ body.theme-light .alert-info {
   position: relative;
   display: inline-block; /* Shrink-wraps the image */
   max-width: 100%;
-  max-height: 82vh; /* Increased zoom for large screens */
+  max-height: 100%; /* Let flex container dictate height */
   cursor: pointer;
   transition: transform 0.3s ease;
 }
@@ -209,7 +209,7 @@ body.theme-light .alert-info {
   width: auto;
   height: auto;
   max-width: 100%;
-  max-height: 82vh; /* Increased zoom */
+  max-height: 100%; /* Let flex container dictate height */
   object-fit: contain;
   /* Frame styling directly on the image */
   background-color: var(--card-bg);
@@ -291,11 +291,11 @@ body.theme-light .alert-info {
   }
 
   .single-image-card {
-    max-height: 55vh; /* Smaller zoom on mobile */
+    max-height: 100%; /* Let flex container dictate height */
   }
 
   .single-image-card img {
-    max-height: 55vh;
+    max-height: 100%;
   }
   
   /* Make the like button always visible on mobile */
