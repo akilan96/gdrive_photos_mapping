@@ -246,7 +246,7 @@ function App() {
             <button
               key={index}
               onClick={() => item !== '...' && setCurrentPage(item)}
-              className={`page-btn ${item === currentPage ? 'active' : ''} ${item === '...' ? 'dots' : ''}`}
+              className={`page-btn page-num ${item === currentPage ? 'active' : ''} ${item === '...' ? 'dots' : ''}`}
               disabled={item === '...'}
             >
               {item}

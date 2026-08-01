@@ -47,7 +47,7 @@ body {
   max-width: 1400px;
   height: 100vh;
   margin: 0 auto;
-  padding: 10px 20px;
+  padding: 5px 20px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -55,7 +55,7 @@ body {
 
 header {
   text-align: center;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -66,7 +66,7 @@ header {
 
 header h1 {
   font-family: 'Roboto', sans-serif;
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   font-weight: 900;
   letter-spacing: 1px;
   margin-bottom: 0px;
@@ -77,7 +77,7 @@ header h1 {
 
 header p {
   color: var(--text-secondary);
-  font-size: 1rem;
+  font-size: 0.9rem;
 }
 
 .header-actions {
@@ -96,10 +96,10 @@ header p {
   background: rgba(255, 71, 87, 0.15);
   border: 1px solid rgba(255, 71, 87, 0.3);
   color: var(--accent);
-  padding: 6px 12px;
+  padding: 4px 10px;
   border-radius: 30px;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 0.9rem;
 }
 
 .favorites-counter .counter-icon {
@@ -131,11 +131,11 @@ header p {
   background-color: rgba(23, 162, 184, 0.15);
   border: 1px solid rgba(23, 162, 184, 0.3);
   color: #4dd0e1;
-  padding: 10px 16px;
+  padding: 6px 12px;
   border-radius: 12px;
   max-width: 700px;
-  margin: 0 auto 15px auto;
-  font-size: 0.9rem;
+  margin: 0 auto 10px auto;
+  font-size: 0.85rem;
   font-weight: 500;
   flex-shrink: 0;
 }
@@ -152,7 +152,7 @@ body.theme-light .alert-info {
 
 .app-footer {
   margin-top: auto;
-  padding-top: 10px;
+  padding-top: 5px;
   padding-bottom: 5px;
   text-align: center;
   flex-shrink: 0;
@@ -160,7 +160,7 @@ body.theme-light .alert-info {
 
 .app-footer p {
   font-family: 'Dancing Script', cursive;
-  font-size: 2rem;
+  font-size: 1.5rem;
   color: var(--text-secondary);
   opacity: 0.6;
   font-weight: 700;
@@ -183,7 +183,7 @@ body.theme-light .alert-info {
   position: relative;
   display: inline-block; /* Shrink-wraps the image */
   max-width: 100%;
-  max-height: 65vh; /* Force zoom to 60-65% to fix overflow */
+  max-height: 75vh; /* Increased zoom for large screens */
   cursor: pointer;
   transition: transform 0.3s ease;
 }
@@ -197,7 +197,7 @@ body.theme-light .alert-info {
   width: auto;
   height: auto;
   max-width: 100%;
-  max-height: 65vh; /* Strictly bound image height */
+  max-height: 75vh; /* Increased zoom */
   object-fit: contain;
   /* Frame styling directly on the image */
   background-color: var(--card-bg);
@@ -286,14 +286,20 @@ body.theme-light .alert-info {
     margin-top: 15px;
     padding: 10px 0;
   }
+
+  /* Hide page numbers on mobile, just show Prev/Next */
+  .page-num {
+    display: none;
+  }
 }
 
 /* Heart Button & YouTube Style Burst Animation */
 .heart-btn {
   pointer-events: auto; /* Re-enable clicks */
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.5); /* Dark glass ensures visibility on bright white photos */
   backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.5); /* Heavy shadow to pop from background */
   border-radius: 50%;
   width: 50px;
   height: 50px;
@@ -306,19 +312,9 @@ body.theme-light .alert-info {
   position: relative;
 }
 
-/* Light mode specific tweak for the heart button so it's visible on bright photos */
-body.theme-light .heart-btn {
-  background: rgba(0, 0, 0, 0.2);
-  border-color: rgba(0, 0, 0, 0.3);
-}
-
 .heart-btn:hover {
-  background: rgba(255, 255, 255, 0.4);
+  background: rgba(0, 0, 0, 0.7);
   transform: scale(1.1);
-}
-
-body.theme-light .heart-btn:hover {
-  background: rgba(0, 0, 0, 0.4);
 }
 
 .heart-btn.favorited {
@@ -447,8 +443,13 @@ body.theme-light .heart-btn:hover {
   justify-content: center;
   align-items: center;
   gap: 10px;
-  margin-top: 50px;
-  padding: 20px 0;
+  margin-top: 15px; /* Reduced to save space */
+  padding: 5px 0;
+}
+
+/* Hide page numbers globally, just show Prev/Next */
+.page-num {
+  display: none;
 }
 
 .page-btn {
