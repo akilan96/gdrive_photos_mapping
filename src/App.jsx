@@ -95,6 +95,11 @@ function App() {
       }
     }
 
+    // Fallback to default configured folder ID if none provided in URL
+    if (!folderId && config.DEFAULT_FOLDER_ID) {
+      folderId = config.DEFAULT_FOLDER_ID;
+    }
+
     if (!folderId) {
       setError('Missing Google Drive Folder ID. Use format: http://localhost:5173/YOUR_FOLDER_ID');
       setLoading(false);
@@ -131,7 +136,7 @@ function App() {
         return {
           id: file.id,
           name: file.name,
-          url: `https://drive.google.com/thumbnail?id=${file.id}&sz=w2000`,
+          url: file.url || `https://drive.google.com/uc?export=view&id=${file.id}`,
           span: 1 
         };
       });
@@ -340,7 +345,19 @@ function App() {
             <img 
               src={img.url} 
               alt={img.name} 
+              referrerPolicy="no-referrer"
               onLoad={() => setImageLoaded(true)}
+              onError={(e) => {
+                if (!e.target.dataset.fallback) {
+                  e.target.dataset.fallback = '1';
+                  e.target.src = `https://lh3.googleusercontent.com/d/${img.id}`;
+                } else if (e.target.dataset.fallback === '1') {
+                  e.target.dataset.fallback = '2';
+                  e.target.src = `https://drive.google.com/thumbnail?id=${img.id}&sz=w2000`;
+                } else {
+                  setImageLoaded(true);
+                }
+              }}
               style={{ opacity: imageLoaded ? 1 : 0, transition: 'opacity 0.3s ease' }}
             />
             <div className="overlay" style={{ opacity: imageLoaded ? '' : 0 }}>
@@ -403,6 +420,16 @@ function App() {
                 <img 
                   src={selectedImage.url} 
                   alt={selectedImage.name} 
+                  referrerPolicy="no-referrer"
+                  onError={(e) => {
+                    if (!e.target.dataset.fallback) {
+                      e.target.dataset.fallback = '1';
+                      e.target.src = `https://lh3.googleusercontent.com/d/${selectedImage.id}`;
+                    } else if (e.target.dataset.fallback === '1') {
+                      e.target.dataset.fallback = '2';
+                      e.target.src = `https://drive.google.com/thumbnail?id=${selectedImage.id}&sz=w2000`;
+                    }
+                  }}
                   style={{ maxWidth: '100vw', maxHeight: '100vh', objectFit: 'contain' }}
                 />
               </TransformComponent>
