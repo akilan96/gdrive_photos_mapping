@@ -136,7 +136,7 @@ function App() {
         return {
           id: file.id,
           name: file.name,
-          url: file.url || `https://drive.google.com/uc?export=view&id=${file.id}`,
+          url: `https://drive.google.com/thumbnail?id=${file.id}&sz=w1600`,
           span: 1 
         };
       });
